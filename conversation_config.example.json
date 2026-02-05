@@ -1,0 +1,10 @@
+{
+  "agents": {
+    "jojo": "agent_bank/populations/single_agent/01fd7d2a-0357-4c1b-9f3e-8eade2d537ae",
+    "yf": "agent_bank/populations/gss_agents/baab8927-5efd-47f9-8958-790e0d109575"
+  },
+  "relationships": {
+    "jojo->yf": "Jojo and yf are daughter and mother who are in goog relationship. Jojo like yf's quickness but but often challenges her ideas.",
+    "yf->jojo": "Yf sees jojo as a good girl. She values her directness and tends to defer to her on her education decisions, such as which college to go, America or Europe."
+  }
+}

@@ -47,7 +47,7 @@ Additionally, to provide users with a sense of the interview-based agents, we of
 ### Requirements
 
 - Python 3.7 or higher
-- An OpenAI API key with access to GPT-4 or GPT-3.5-turbo models
+- Ollama installed and running locally (default backend)
 
 ### Dependencies
 
@@ -63,23 +63,33 @@ Create a `settings.py` file in the `simulation_engine` folder (where `example-se
 
 ```python
 from pathlib import Path
+import os
 
-OPENAI_API_KEY = "YOUR_API_KEY"
-KEY_OWNER = "YOUR_NAME"
+USE_OLLAMA = True
+USE_OPENAI = False
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "API_KEY")
+KEY_OWNER = os.getenv("KEY_OWNER", "NAME")
+
+OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b-instruct-q4_K_M")
+OLLAMA_EMBEDDING_MODEL = os.getenv("OLLAMA_EMBEDDING_MODEL", "nomic-embed-text:latest")
+OLLAMA_TEMPERATURE = float(os.getenv("OLLAMA_TEMPERATURE", "0.85"))
+OLLAMA_TOP_P = float(os.getenv("OLLAMA_TOP_P", "0.92"))
+OLLAMA_MAX_TOKENS = int(os.getenv("OLLAMA_MAX_TOKENS", "2000"))
+OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
 
 DEBUG = False
-
 MAX_CHUNK_SIZE = 4
 
-LLM_VERS = "gpt-4o-mini"
+LLM_VERS = "ollama" if USE_OLLAMA else "gpt-4o-mini"
 
 BASE_DIR = f"{Path(__file__).resolve().parent.parent}"
-
 POPULATIONS_DIR = f"{BASE_DIR}/agent_bank/populations"
 LLM_PROMPT_DIR = f"{BASE_DIR}/simulation_engine/prompt_template"
 ```
 
-Replace `"YOUR_API_KEY"` with your actual OpenAI API key and `"YOUR_NAME"` with your name.
+With Ollama enabled, no OpenAI API key is required. If you want to use OpenAI instead, set `USE_OPENAI = True` and `USE_OLLAMA = False`, then provide your API key.
 
 ## Repository Structure
 

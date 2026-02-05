@@ -156,8 +156,13 @@ def run_gpt_generate_utterance(
     return [agent_desc, context, str_dialogue]
 
   def _func_clean_up(gpt_response, prompt=""): 
-    utterance = extract_first_json_dict(gpt_response)["utterance"]
-    return utterance
+    json_dict = extract_first_json_dict(gpt_response)
+    if isinstance(json_dict, dict) and "utterance" in json_dict:
+      return json_dict["utterance"]
+    m = re.search(r'"utterance"\s*:\s*"([^"]+)"', str(gpt_response))
+    if m:
+      return m.group(1)
+    return str(gpt_response).strip()
 
   def _get_fail_safe():
     return None
@@ -248,7 +253,6 @@ def run_gpt_generate_ask(
 
 
   
-
 
 
 
